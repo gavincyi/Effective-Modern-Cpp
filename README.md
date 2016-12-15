@@ -108,3 +108,8 @@ If you have a whole week vocation, buy the [book](http://shop.oreilly.com/produc
     Item 41:  Consider pass by value for copyable parameters that are cheap to move and always copied.
 
     Item 42:  Consider emplacement instead of insertion.                                             
+
+
+## Disclaimer
+
+I do not own the copyright of the repository and the copyright belongs to Scott Meyers. The repository is only for personal use.
