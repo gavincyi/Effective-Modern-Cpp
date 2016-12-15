@@ -12,22 +12,60 @@ If you have a whole week vocation, buy the [book](http://shop.oreilly.com/produc
 1. Deducing Types
 
     Item 1:  Understand template type deduction.
+    
+    * During  template  type  deduction, arguments that are references are treated as non-references, i.e., their reference-ness is ignored.
+    
+    * When deducing types for universal reference parameters, lvalue arguments get special treatment.
+    
+    * When deducing types for by-value parameters, const and/or volatile arguments are treated as non-const and non-volatile.
+    
+    * During template type deduction, arguments that are array or function names decay to pointers, unless they’re used to initialize references.
 
     Item 2:  Understand auto type deduction.
 
+    * auto type deduction is usually the same as template type deduction, but auto type deduction assumes that a braced initializer represents a  std::initializer_list, and template type deduction doesn’t.
+
+    * auto in a function return type or a lambda parameter implies template type deduction, not auto type deduction
+
     Item 3:  Understand decltype.
 
+    * decltype almost always yields the type of a variable or expression without any modifications.
+
+    * For lvalue expressions of type T other than names, decltype always reports a type of T&.
+
+    * C++14 supports decltype(auto), which, like auto, deduces a type from its initializer, but it performs the type deduction using the decltype rules.
+
     Item 4:  Know how to view deduced types.
+    
+    * Deduced types can often be seen using IDE editors, compiler error messages, and the Boost TypeIndex library.
+
+    * The results of some tools may be neither helpful nor accurate, so an understanding of C++’s type deduction rules remains essential.
 
 2. auto
 
     Item 5:  Prefer auto to explicit type declarations.
 
+    * auto variables must be initialized, are generally immune to type mismatches that can lead to portability or efficiency problems, can ease the process of refactoring, and typically require less typing than variables with explicitly specified types.
+
+    * auto-typed variables are subject to the pitfalls described in Items 2 and 6.
+
     Item 6:  Use the explicitly typed initializer idiom when auto deduces undesired types.
+
+    * “Invisible” proxy types can cause auto to deduce the “wrong” type for an initializing expression.
+
+    * The explicitly typed initializer idiom forces auto to deduce the type you want it to have.
 
 3. Moving to Modern C++
 
     Item 7:  Distinguish between () and {} when creating objects.
+
+    * Braced initialization is the most widely usable initialization syntax, it prevents narrowing conversions, and it’s immune to C++’s most vexing parse.
+
+    * During constructor overload resolution, braced initializers are matched to std::initializer_list parameters if at all possible, even if other constructors offer seemingly better matches.
+
+    * An example of where the choice between parentheses and braces can make a significant difference is creating a std::vector\<numeric type\> with two arguments.
+
+    * Choosing between parentheses and braces for object creation inside templates can be challenging.
 
     Item 8: Prefer nullptr to 0 and NULL.
 
